@@ -36,7 +36,7 @@
 
 	leds {
 		compatible = "gpio-leds";
-
+    status = "disabled";
 		led1 {
 			label = "led1";
 			gpios = <&gpm4 0 GPIO_ACTIVE_LOW>;
@@ -88,7 +88,26 @@
             tiny4412,int_gpio3 = <&gpx3 4 GPIO_ACTIVE_HIGH>;
             tiny4412,int_gpio4 = <&gpx3 5 GPIO_ACTIVE_HIGH>;
     };
+    led_pin {
+    compatible         = "tiny4412,led_demo";
+    pinctrl-names = "led_demo";
+    pinctrl-0 = <&led_demo>;
+    tiny4412,int_gpio1 = <&gpm4 0 GPIO_ACTIVE_HIGH>;
+    tiny4412,int_gpio2 = <&gpm4 1 GPIO_ACTIVE_HIGH>;
+    tiny4412,int_gpio3 = <&gpm4 2 GPIO_ACTIVE_HIGH>;
+    tiny4412,int_gpio4 = <&gpm4 3 GPIO_ACTIVE_HIGH>;
+		};
+
+
 };
+&pinctrl_1 {
+    led_demo: led{
+            samsung,pins = "gpm4-0", "gpm4-1" ,"gpm4-2", "gpm4-3";
+            samsung,pin-function = <0x1>;   //1为输出
+            samsung,pin-pud = <0x0>;        //没有上拉
+            samsung,pin-drv = <0x0>;        //驱动强度？
+    };
+}; 
 
 &rtc {
 	status = "okay";
